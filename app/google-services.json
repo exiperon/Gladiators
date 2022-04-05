@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1018337682336",
+    "project_id": "neighbor-chat-fabdf",
+    "storage_bucket": "neighbor-chat-fabdf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1018337682336:android:67d3d689b9abc99fd5bac5",
+        "android_client_info": {
+          "package_name": "com.ewingelen.neighbor_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1018337682336-mhd7ehfkitej1350oiq30ad33hf43g1r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDn8v4hJHko8zCLHNwZfXSfKOpASJ9k8Vg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1018337682336-mhd7ehfkitej1350oiq30ad33hf43g1r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

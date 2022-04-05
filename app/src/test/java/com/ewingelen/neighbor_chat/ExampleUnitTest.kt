@@ -1,4 +1,4 @@
-package com.ewingelen.neighborchat
+package com.ewingelen.neighbor_chat
 
 import org.junit.Test
 

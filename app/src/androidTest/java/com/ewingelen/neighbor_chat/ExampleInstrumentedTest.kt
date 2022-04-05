@@ -1,4 +1,4 @@
-package com.ewingelen.neighborchat
+package com.ewingelen.neighbor_chat
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

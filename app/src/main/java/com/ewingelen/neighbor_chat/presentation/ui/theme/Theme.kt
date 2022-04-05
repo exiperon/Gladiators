@@ -1,4 +1,4 @@
-package com.ewingelen.neighborchat.ui.theme
+package com.ewingelen.neighbor_chat.presentation.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
@@ -7,31 +7,27 @@ import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 
 private val DarkColorPalette = darkColors(
-    primary = Purple200,
-    primaryVariant = Purple700,
-    secondary = Teal200
+    primary = White,
+    secondary = Red,
+    secondaryVariant = White,
+    background = Blue,
+    onBackground = White,
+    surface = Cyan,
+    onSurface = Black
 )
 
 private val LightColorPalette = lightColors(
-    primary = Purple500,
-    primaryVariant = Purple700,
-    secondary = Teal200
-
-    /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
+    primary = White,
+    secondary = Red,
+    secondaryVariant = White,
+    background = Blue,
+    onBackground = White,
+    surface = Cyan,
+    onSurface = Black
 )
 
 @Composable
-fun NeighborChatTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable() () -> Unit
-) {
+fun NeighborChatTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
     val colors = if (darkTheme) {
         DarkColorPalette
     } else {

@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">NeighborChat</string>
+    <string name="app_name">Neighbor Chat</string>
+    <string name="enter_your_name">Введіть ваше ім\'я</string>
+    <string name="name">Ім\'я</string>
+    <string name="log_in">Увійти</string>
+    <string name="first_enter_a_name">Спочатку введіть ім\'я!</string>
+    <string name="send_message">Отправить сообщение</string>
+    <string name="enter_a_message">Введіть повідомлення</string>
+    <string name="air_raid_alert">УВАГА. ПОВІТРЯНА ТРИВОГА</string>
 </resources>

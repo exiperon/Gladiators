@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.ewingelen.neighbor_chat.presentation.components.LoadingScreen
 import com.ewingelen.neighbor_chat.presentation.util.Navigation
 import com.ewingelen.neighbor_chat.presentation.util.Screen
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,19 +17,16 @@ class MainActivity : ComponentActivity() {
 
         val viewModel: MainViewModel by viewModels()
 
-        installSplashScreen().apply {
-            setKeepOnScreenCondition {
-                !viewModel.userIsAuthorized.value
-            }
-        }
-
-        val startDestination =
-            if (viewModel.userIsAuthorized.value) Screen.ChatScreen.withArgs("ere")
-            else Screen.LoginScreen.route
-
         setContent {
             NeighborChatApp {
-                Navigation(startDestination)
+                if (viewModel.loadingFinished.value) {
+                    val startDestination =
+                        if (viewModel.userIsAuthorized.value) Screen.ChatScreen.route
+                        else Screen.LoginScreen.route
+                    Navigation(startDestination)
+                } else {
+                    LoadingScreen()
+                }
             }
         }
     }

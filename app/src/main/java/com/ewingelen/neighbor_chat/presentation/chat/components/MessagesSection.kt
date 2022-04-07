@@ -4,11 +4,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.ewingelen.neighbor_chat.domain.model.Message
-import com.ewingelen.neighbor_chat.presentation.ui.theme.SpaceNormal
 import com.ewingelen.neighbor_chat.presentation.ui.theme.SpaceSmall
 
 @Composable
@@ -22,12 +19,12 @@ fun MessagesSection(
     ) {
         items(items = messages) { message ->
             Column(
-                horizontalAlignment = if (message.isSentByMe) Alignment.End else Alignment.Start,
+//                horizontalAlignment = if (true) Alignment.End else Alignment.Start,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(
-                        start = if (message.isSentByMe) SpaceNormal else 0.dp,
-                        end = if (message.isSentByMe) 0.dp else SpaceNormal
+//                        start = if (message.isSentByMe) SpaceNormal else 0.dp,
+//                        end = if (message.isSentByMe) 0.dp else SpaceNormal
                     )
 
             ) {

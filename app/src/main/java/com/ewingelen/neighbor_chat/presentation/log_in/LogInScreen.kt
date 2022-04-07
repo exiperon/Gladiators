@@ -47,7 +47,7 @@ fun LoginScreen(
                 viewModel.setUserName(it)
                 viewModel.setShowError(false)
             },
-            maxLines = 1,
+            singleLine = true,
             modifier = Modifier.width(128.dp)
         )
 
@@ -56,7 +56,7 @@ fun LoginScreen(
         Button(
             onClick = {
                 if (userName.isNotEmpty()) {
-                    navController.navigate(Screen.ChatScreen.withArgs(userName))
+                    navController.navigate(Screen.ChatScreen.route)
                     viewModel.logIn()
                 } else {
                     viewModel.setShowError(true)

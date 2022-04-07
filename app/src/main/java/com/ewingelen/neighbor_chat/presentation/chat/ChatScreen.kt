@@ -13,11 +13,13 @@ import com.ewingelen.neighbor_chat.presentation.ui.theme.SpaceSmall
 
 @Composable
 fun ChatScreen(
-    userName: String?,
     viewModel: ChatViewModel = hiltViewModel()
 ) {
     val messages = viewModel.messages
     val message = viewModel.message.value
+
+//    val userName =
+//    val userId =
 
     Column(
         modifier = Modifier
@@ -35,7 +37,7 @@ fun ChatScreen(
         SendMessageSection(
             message = message,
             setMessage = { viewModel.setMessage(it) },
-            sendMessage = { viewModel.sendMessage() }
+            sendMessage = { viewModel.sendMessage(senderId = "rere", senderName = "erer") }
         )
 
         Spacer(modifier = Modifier.height(SpaceSmall))

@@ -2,10 +2,9 @@ package com.ewingelen.neighbor_chat.presentation.log_in
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.datastore.core.DataStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ewingelen.neighbor_chat.AppSettings
+import com.ewingelen.neighbor_chat.domain.use_cases.ChatUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -13,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LogInViewModel @Inject constructor(
-    private val dataStore: DataStore<AppSettings>
+    private val useCases: ChatUseCases
 ) : ViewModel() {
 
     private val _userName = mutableStateOf("")
@@ -32,12 +31,7 @@ class LogInViewModel @Inject constructor(
 
     fun logIn() {
         viewModelScope.launch(Dispatchers.IO) {
-            dataStore.updateData {
-                it.copy(
-                    userIsAuthorized = true,
-                    userName = _userName.value
-                )
-            }
+            useCases.logIn(userName.value)
         }
     }
 }

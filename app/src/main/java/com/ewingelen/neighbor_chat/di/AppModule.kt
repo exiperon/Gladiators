@@ -5,10 +5,11 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
 import com.ewingelen.neighbor_chat.AppSettings
 import com.ewingelen.neighbor_chat.AppSettingsSerializer
-import com.ewingelen.neighbor_chat.data.repository.NeighborChatRepositoryImpl
-import com.ewingelen.neighbor_chat.domain.repository.NeighborChatRepository
+import com.ewingelen.neighbor_chat.data.repository.ChatRepositoryImpl
+import com.ewingelen.neighbor_chat.domain.repository.ChatRepository
+import com.ewingelen.neighbor_chat.domain.use_cases.ChatUseCases
+import com.ewingelen.neighbor_chat.domain.use_cases.GetUser
 import com.ewingelen.neighbor_chat.domain.use_cases.LogIn
-import com.ewingelen.neighbor_chat.domain.use_cases.NeighborChatUseCases
 import com.ewingelen.neighbor_chat.domain.use_cases.SendMessage
 import dagger.Module
 import dagger.Provides
@@ -36,14 +37,15 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideNeighborChatRepository(): NeighborChatRepository =
-        NeighborChatRepositoryImpl()
+    fun provideNeighborChatRepository(dataStore: DataStore<AppSettings>): ChatRepository =
+        ChatRepositoryImpl(dataStore)
 
     @Singleton
     @Provides
-    fun provideUseCases(repository: NeighborChatRepository) =
-        NeighborChatUseCases(
+    fun provideUseCases(repository: ChatRepository) =
+        ChatUseCases(
             logIn = LogIn(repository),
+            getUser = GetUser(repository),
             sendMessage = SendMessage(repository)
         )
 }

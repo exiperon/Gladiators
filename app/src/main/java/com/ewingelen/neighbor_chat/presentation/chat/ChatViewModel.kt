@@ -6,39 +6,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import com.ewingelen.neighbor_chat.domain.model.Message
-import com.ewingelen.neighbor_chat.domain.use_cases.NeighborChatUseCases
+import com.ewingelen.neighbor_chat.domain.use_cases.ChatUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class ChatViewModel @Inject constructor(
-    private val useCases: NeighborChatUseCases
+    private val useCases: ChatUseCases
 ) : ViewModel() {
 
-    private val _messages = mutableStateListOf<Message>(
-        Message(
-            isSentByMe = true,
-            sendingTime = 123,
-            text = "Привіт",
-            isAlert = false
-        ),
-        Message(
-            isSentByMe = false,
-            sendingTime = 123,
-            text = "Чия це нова машина під домом стоїть?",
-            isAlert = false,
-            senderName = "Жанна",
-        ),
-        Message(isSentByMe = true, sendingTime = 123, text = "Як справи, сусіди?", false),
-        Message(isSentByMe = false, sendingTime = 123, text = "...", false, "Анна"),
-        Message(
-            isSentByMe = false,
-            sendingTime = 123,
-            text = "Повітряна тривога!!",
-            true,
-            "Артем",
-        ),
-    )
+    private val _messages = mutableStateListOf<Message>()
     val messages: SnapshotStateList<Message> = _messages
 
     private val _message = mutableStateOf("")
@@ -50,19 +27,28 @@ class ChatViewModel @Inject constructor(
 //        }
     }
 
-    private fun getMessages() {
-
-    }
-
     fun setMessage(message: String) {
         _message.value = message
     }
 
-    fun sendMessage() {
-        useCases.sendMessage()
+    fun sendMessage(senderId: String, senderName: String) {
+        val message = Message(
+            text = message.value,
+            isAlert = isMessageAlert(message.value),
+            senderId = senderId,
+            senderName = senderName
+        )
+        useCases.sendMessage(message)
+    }
+
+    fun getMessages() {
+
     }
 
     fun soundSwitch() {
 
     }
+
+    private fun isMessageAlert(messageText: String) =
+        messageText.lowercase().contains("тривога")
 }

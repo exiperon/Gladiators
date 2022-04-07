@@ -16,8 +16,9 @@ fun UnderlinedTextField(
     hint: String,
     value: String,
     onValueChange: (String) -> Unit,
-    maxLines: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    singleLine: Boolean = false,
+    maxLines: Int = Int.MAX_VALUE,
 ) {
     Column(modifier = modifier) {
         Box(
@@ -28,6 +29,7 @@ fun UnderlinedTextField(
                 value = value,
                 onValueChange = onValueChange,
                 textStyle = MaterialTheme.typography.caption,
+                singleLine = singleLine,
                 maxLines = maxLines,
                 modifier = Modifier.fillMaxWidth()
             )

@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AppSettings(
-    val userIsAuthorized: Boolean = false,
+    val userId: String? = null,
     val userName: String? = null
 )

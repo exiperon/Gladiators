@@ -9,9 +9,11 @@ interface ChatRepository {
 
     suspend fun logIn(userName: String)
 
+    suspend fun signOut()
+
     fun getUser(): Flow<Resource<User>>
 
     fun sendMessage(message: Message)
 
-//    fun getMessages(): Flow<List<Message>>
+    suspend fun getMessages(): List<Message>
 }

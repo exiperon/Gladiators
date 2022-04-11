@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.sp
 import com.ewingelen.neighbor_chat.R
 import com.ewingelen.neighbor_chat.presentation.ui.theme.Red
 import com.ewingelen.neighbor_chat.presentation.ui.theme.SpaceExtraSmall
@@ -26,11 +27,12 @@ import com.ewingelen.neighbor_chat.presentation.ui.theme.SpaceSmall
 @Composable
 fun AirRaidAlert(
     soundIsPlaying: Boolean,
-    soundSwitch: () -> Unit
+    soundSwitch: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
+        modifier = modifier
             .background(color = Red, shape = MaterialTheme.shapes.large)
             .padding(vertical = SpaceExtraSmall, horizontal = SpaceSmall)
     ) {
@@ -43,7 +45,7 @@ fun AirRaidAlert(
 
         Text(
             text = stringResource(id = R.string.air_raid_alert),
-            style = MaterialTheme.typography.body2
+            fontSize = 14.sp
         )
 
         Spacer(modifier = Modifier.width(SpaceSmall))

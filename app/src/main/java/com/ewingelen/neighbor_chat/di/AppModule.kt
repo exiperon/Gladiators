@@ -7,10 +7,7 @@ import com.ewingelen.neighbor_chat.AppSettings
 import com.ewingelen.neighbor_chat.AppSettingsSerializer
 import com.ewingelen.neighbor_chat.data.repository.ChatRepositoryImpl
 import com.ewingelen.neighbor_chat.domain.repository.ChatRepository
-import com.ewingelen.neighbor_chat.domain.use_cases.ChatUseCases
-import com.ewingelen.neighbor_chat.domain.use_cases.GetUser
-import com.ewingelen.neighbor_chat.domain.use_cases.LogIn
-import com.ewingelen.neighbor_chat.domain.use_cases.SendMessage
+import com.ewingelen.neighbor_chat.domain.use_cases.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,6 +43,8 @@ object AppModule {
         ChatUseCases(
             logIn = LogIn(repository),
             getUser = GetUser(repository),
-            sendMessage = SendMessage(repository)
+            sendMessage = SendMessage(repository),
+            getMessages = GetMessages(repository),
+            signOut = SignOut(repository)
         )
 }

@@ -20,9 +20,13 @@ import com.ewingelen.neighbor_chat.presentation.ui.theme.White
 fun SendMessageSection(
     message: String,
     setMessage: (String) -> Unit,
-    sendMessage: () -> Unit
+    sendMessage: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
+    ) {
         UnderlinedTextField(
             hint = stringResource(id = R.string.enter_a_message),
             value = message,

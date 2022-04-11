@@ -10,6 +10,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.tasks.await
 import java.util.*
 import javax.inject.Inject
 
@@ -28,13 +29,25 @@ class ChatRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun signOut() {
+        dataStore.updateData {
+            it.copy(
+                userId = null,
+                userName = null
+            )
+        }
+    }
+
     override fun getUser(): Flow<Resource<User>> = flow {
         try {
             emit(Resource.Loading())
-//            val user = dataStore.data.map {
-//                User(it.userId!!, it.userName!!)
-//            }
-            emit(Resource.Success(User("rere", "erer")))
+            dataStore.data.collect {
+                if (it.userId != null && it.userName != null) {
+                    emit(Resource.Success(User(it.userId, it.userName)))
+                } else {
+                    emit(Resource.Error<User>("User is unauthorized"))
+                }
+            }
         } catch (e: Exception) {
             emit(Resource.Error<User>("An unexpected error occurred"))
         }
@@ -43,18 +56,25 @@ class ChatRepositoryImpl @Inject constructor(
     override fun sendMessage(message: Message) {
         try {
             messagesCollectionRef.add(message)
-        } catch(e: Exception) {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
-//    override fun getMessages(): List<Message> {
-//        try {
-//            messagesCollectionRef.get().addOnSuccessListener {
-//
-//            }
-//        } catch (e: Exception) {
-//            return emptyList()
-//        }
-//    }
+    override suspend fun getMessages(): List<Message> {
+        val documents = messagesCollectionRef.orderBy("sendingTime").get().await()
+        val messages = mutableListOf<Message>()
+        for (document in documents) {
+            messages.add(
+                Message(
+                    text = document.get("text") as String,
+                    isAlert = document.get("alert") as Boolean,
+                    senderName = document.get("senderName") as String,
+                    senderId = document.get("senderId") as String,
+                    sendingTime = document.get("sendingTime") as Long
+                )
+            )
+        }
+        return messages
+    }
 }

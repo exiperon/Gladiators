@@ -16,7 +16,7 @@ fun Navigation(startDestination: String) {
             LoginScreen(navController)
         }
         composable(route = Screen.ChatScreen.route) {
-            ChatScreen()
+            ChatScreen(navController)
         }
     }
 }

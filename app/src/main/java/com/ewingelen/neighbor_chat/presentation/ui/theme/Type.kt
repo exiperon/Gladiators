@@ -5,6 +5,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
 
 val Typography = Typography(
+    body2 = TextStyle(
+        fontSize = 12.sp,
+        color = Gray
+    ),
     h6 = TextStyle(
         fontSize = 22.sp,
         color = White

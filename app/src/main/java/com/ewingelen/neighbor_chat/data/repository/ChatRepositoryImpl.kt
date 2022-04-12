@@ -14,6 +14,9 @@ import kotlinx.coroutines.tasks.await
 import java.util.*
 import javax.inject.Inject
 
+
+
+
 class ChatRepositoryImpl @Inject constructor(
     private val dataStore: DataStore<AppSettings>
 ) : ChatRepository {
@@ -61,20 +64,17 @@ class ChatRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getMessages(): List<Message> {
+    override fun getMessages(): Flow<Message> = flow {
         val documents = messagesCollectionRef.orderBy("sendingTime").get().await()
-        val messages = mutableListOf<Message>()
+
         for (document in documents) {
-            messages.add(
-                Message(
-                    text = document.get("text") as String,
-                    isAlert = document.get("alert") as Boolean,
-                    senderName = document.get("senderName") as String,
-                    senderId = document.get("senderId") as String,
-                    sendingTime = document.get("sendingTime") as Long
-                )
-            )
+            emit(Message(
+                text = document.get("text") as String,
+                isAlert = document.get("alert") as Boolean,
+                senderName = document.get("senderName") as String,
+                senderId = document.get("senderId") as String,
+                sendingTime = document.get("sendingTime") as Long
+            ))
         }
-        return messages
     }
 }

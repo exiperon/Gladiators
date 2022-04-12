@@ -21,6 +21,8 @@ fun SendMessageSection(
     message: String,
     setMessage: (String) -> Unit,
     sendMessage: () -> Unit,
+    onOpenKeyboard: () -> Unit,
+    onCloseKeyboard: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -32,6 +34,8 @@ fun SendMessageSection(
             value = message,
             onValueChange = { setMessage(it) },
             maxLines = 3,
+            onOpenKeyboard = { onOpenKeyboard() },
+            onCloseKeyboard = { onCloseKeyboard() },
             modifier = Modifier.weight(1f)
         )
 

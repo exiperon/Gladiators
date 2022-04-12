@@ -15,5 +15,5 @@ interface ChatRepository {
 
     fun sendMessage(message: Message)
 
-    suspend fun getMessages(): List<Message>
+    fun getMessages(): Flow<Message>
 }

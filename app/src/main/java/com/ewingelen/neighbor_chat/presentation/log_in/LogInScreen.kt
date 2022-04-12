@@ -31,7 +31,9 @@ fun LoginScreen(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-        modifier = Modifier.fillMaxSize().background(color = Blue)
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Blue)
     ) {
         Text(
             text = stringResource(id = R.string.enter_your_name),

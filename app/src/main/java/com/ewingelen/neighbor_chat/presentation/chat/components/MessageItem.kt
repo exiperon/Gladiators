@@ -36,13 +36,17 @@ fun MessageItem(
             if (userId != senderId) {
                 Text(
                     text = senderName,
+                    style = MaterialTheme.typography.body1,
                     fontWeight = FontWeight.Bold
                 )
 
                 Spacer(modifier = Modifier.height(SpaceExtraSmall))
             }
 
-            Text(text = messageText)
+            Text(
+                text = messageText,
+                style = MaterialTheme.typography.body1,
+            )
 
             Spacer(modifier = Modifier.height(SpaceExtraSmall))
 

@@ -15,8 +15,8 @@
             android:name=".presentation.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.NeighborChat"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.NeighborChat">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

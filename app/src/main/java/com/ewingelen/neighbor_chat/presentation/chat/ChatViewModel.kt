@@ -10,8 +10,11 @@ import com.ewingelen.neighbor_chat.core.Resource
 import com.ewingelen.neighbor_chat.domain.model.Message
 import com.ewingelen.neighbor_chat.domain.model.User
 import com.ewingelen.neighbor_chat.domain.use_cases.ChatUseCases
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -32,9 +35,36 @@ class ChatViewModel @Inject constructor(
     val user: State<User> = _user
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             getUser()
             getMessages()
+
+            var shouldListen = false
+            val messagesCollectionRef =
+                Firebase.firestore.collection("messages").orderBy("sendingTime")
+
+            messagesCollectionRef.addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    return@addSnapshotListener
+                }
+
+                if (shouldListen) {
+                    if (snapshot != null && !snapshot.isEmpty) {
+                        val lastDocument = snapshot.documentChanges.last().document
+                        _messages.add(
+                            Message(
+                                text = lastDocument.get("text") as String,
+                                isAlert = lastDocument.get("alert") as Boolean,
+                                senderName = lastDocument.get("senderName") as String,
+                                senderId = lastDocument.get("senderId") as String,
+                                sendingTime = lastDocument.get("sendingTime") as Long
+                            )
+                        )
+                    }
+                }
+
+                shouldListen = true
+            }
         }
     }
 
@@ -43,16 +73,21 @@ class ChatViewModel @Inject constructor(
     }
 
     fun sendMessage() {
-            val message = Message(
-                text = message.value,
-                isAlert = isMessageAlert(),
-                senderId = _user.value.id,
-                senderName = _user.value.name,
-                sendingTime = System.currentTimeMillis()
-            )
-            useCases.sendMessage(message)
-            _messages.add(message)
-            _message.value = ""
+        val message = Message(
+            text = message.value,
+            isAlert = isMessageAlert(),
+            senderId = _user.value.id,
+            senderName = _user.value.name,
+            sendingTime = System.currentTimeMillis()
+        )
+        useCases.sendMessage(message)
+        _message.value = ""
+    }
+
+    private suspend fun getMessages() {
+        useCases.getMessages().collectLatest {
+            _messages.add(it)
+        }
     }
 
     private fun getUser() {
@@ -63,18 +98,14 @@ class ChatViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
+    fun isMessageAlert() =
+        message.value.lowercase().contains("тривога") ||
+                message.value.lowercase().contains("повітряна") ||
+                message.value.lowercase().contains("ракетн")
+
     fun signOut() {
         viewModelScope.launch(Dispatchers.IO) {
             useCases.signOut()
         }
     }
-
-    private suspend fun getMessages() {
-        _messages.addAll(useCases.getMessages())
-    }
-
-    fun isMessageAlert() =
-        message.value.lowercase().contains("тривога") ||
-                message.value.lowercase().contains("повітряна") ||
-                message.value.lowercase().contains("ракетн")
 }

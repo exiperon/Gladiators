@@ -8,4 +8,5 @@
     <string name="enter_a_message">Введіть повідомлення</string>
     <string name="air_raid_alert">УВАГА. ПОВІТРЯНА ТРИВОГА</string>
     <string name="exit">Вийти</string>
+    <string name="side_down">Прогортати вниз</string>
 </resources>
